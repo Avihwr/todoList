@@ -12,4 +12,5 @@ class Tasks(models.Model):
     taskTime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.taskName
+        return self.taskName + ' by ' + self.user.username
+

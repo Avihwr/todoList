@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="/statics/css/styles.css">
+    <link rel="stylesheet" href="/statics/css/style.css">
     <link rel="stylesheet" href="/statics/css/tablestyle.css">
 
     <title>Todo List | Tasks</title>
@@ -28,18 +28,34 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/tasks">Tasks</a>
             </li>
+            {% if not user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="/register">Register</a>
             </li>
+                {% endif %}
+            {% if user.is_superuser %}
             <li class="nav-item">
                 <a class="nav-link" href="/admin">Admin Login</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
 
         </ul>
     </div>
 </nav>
-<div class="container1 my-3">
-<h3 class="text-center py-3" style="font-family: 'Berlin Sans FB',cursive">ToDo List - All Tasks</h3>
+{% for message in messages %}
+<div class="alert alert-dark alert-dismissible fade show" role="alert">
+{{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endfor %}
+<h3 class="text-center py-3" style="font-family: 'monospace',cursive">{{ user.username | capfirst}} - Your Tasks</h3>
+<div class="container1 my-3" style=" margin-right: 200px; margin-left: 200px; align-content: center">
+
 <div class="table-responsive">
 <table  id="avi" class="table table-hover">
     <thead class="text-center">
@@ -47,15 +63,17 @@
         <th scope="col" style=" font-family: 'Comic Sans MS',serif; font-size: 20px">#</th>
         <th scope="col" style=" font-family: 'Comic Sans MS',serif; font-size: 20px;"><strong>Task Name</strong> </th>
         <th scope="col" style=" font-family: 'Comic Sans MS',serif; font-size: 20px;"><strong>Task Description</strong></th>
+        <th scope="col" style=" font-family: 'Comic Sans MS',serif; font-size: 20px;"><strong>Action</strong></th>
     </tr>
     </thead>
     <tbody class="text-center">
-    {% for task in tasks %}
+    {% for task in user.Tasks.all %}
 
         <tr>
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{task.taskName}}</td>
             <td>{{task.taskDesc}}</td>
+            <td><a href="{% url "delete" pk=task.pk %}"><span>Delete</span></a></td>
         </tr>
     {% endfor %}
     </tbody>

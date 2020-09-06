@@ -8,10 +8,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="/statics/css/styles.css">
+    <link rel="stylesheet" href="/statics/css/style.css">
     <title>Todo List | Home</title>
 </head>
-<body>
+<body style="background-color: beige;!important;">
 {% if user.is_authenticated %}
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
     <a class="navbar-brand" href="/home">TODO</a>
@@ -27,25 +27,34 @@
             <li class="nav-item">
                 <a class="nav-link" href="/tasks">Tasks</a>
             </li>
+            {% if not user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="/register">Register</a>
             </li>
+                {% endif %}
+        {% if user.is_superuser %}
             <li class="nav-item">
                 <a class="nav-link" href="/admin">Admin Login</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
             </li>
         </ul>
     </div>
 </nav>
 
-    <a href="/logout" button type="button" class="btn-sm btn-outline-dark" style="margin-left: 1400px; margin-top: 10px;">Logout</a>
-{% if success %}
-    <div class="alert alert-dark alert-dismissible fade show" role="alert">
-        <strong>Success!</strong> Task Added.
+    {% for message in messages %}
+<div class="alert alert-dark alert-dismissible fade show" role="alert">
+{{ message }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-{% endif %}
+{% endfor %}
+<div class="name">
+<h4 class="text-center mt-2">Welcome {{ user.username | capfirst}}</h4>
+</div>
 <div class="background">
     <div class="container">
         <div class="screen">
@@ -99,8 +108,12 @@
     </div>
 </div>
 {% else %}
+    <div class="border text-center">
    <h1 class="text-center mt-5">You're Not Logged In. You must login to create tasks.</h1>
-      <a class="btn btn-outline-dark" style="margin-left: 720px" href="/login" role="button">Login</a>
+      <a class="btn btn-outline-dark my-2"  href="/login" role="button">Login</a>
+    <p class="or my-2" style=" font-size:large ">or</p>
+      <a class="btn btn-outline-dark my-2"  href="/register" role="button">Register</a>
+    </div>
 {% endif %}
 
 <a href="http://avigupta.pythonanywhere.com" target="_blank" id="ytd-url">Visit My Website</a>
