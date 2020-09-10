@@ -63,6 +63,7 @@
         <th scope="col" style=" font-family: 'Comic Sans MS',serif; font-size: 20px">#</th>
         <th scope="col" style=" font-family: 'Comic Sans MS',serif; font-size: 20px;"><strong>Task Name</strong> </th>
         <th scope="col" style=" font-family: 'Comic Sans MS',serif; font-size: 20px;"><strong>Task Description</strong></th>
+        <th scope="col" style=" font-family: 'Comic Sans MS',serif; font-size: 20px;"><strong>Task Time</strong></th>
         <th scope="col" style=" font-family: 'Comic Sans MS',serif; font-size: 20px;"><strong>Action</strong></th>
     </tr>
     </thead>
@@ -73,6 +74,7 @@
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{task.taskName}}</td>
             <td>{{task.taskDesc}}</td>
+            <td>{{task.taskTime}}</td>
             <td><a href="{% url "delete" pk=task.pk %}"><span>Delete</span></a></td>
         </tr>
     {% endfor %}

@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 
+
 from home.models import Tasks
 
 
@@ -29,5 +30,3 @@ def delete(request, pk):
     task = Tasks.objects.filter(pk=pk)
     task.delete()
     return HttpResponseRedirect(reverse('tasks'))
-
-
